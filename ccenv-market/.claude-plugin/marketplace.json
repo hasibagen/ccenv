@@ -1,0 +1,19 @@
+{
+  "name": "ccenv-market",
+  "owner": {
+    "name": "ccenv-community"
+  },
+  "plugins": [
+    {
+      "name": "ccenv",
+      "source": "./ccenv",
+      "description": "Claude Code environment manager - conda-like profile management for plugins, MCP servers, skills, and agents",
+      "version": "1.0.0",
+      "author": {
+        "name": "ccenv contributors"
+      },
+      "keywords": ["environment", "profile", "conda", "configuration", "management"],
+      "license": "MIT"
+    }
+  ]
+}

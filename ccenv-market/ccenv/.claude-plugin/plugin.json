@@ -1,0 +1,10 @@
+{
+  "name": "ccenv",
+  "description": "Claude Code environment manager - conda-like profile management for plugins, MCP servers, skills, and agents",
+  "version": "1.0.0",
+  "author": {
+    "name": "ccenv contributors"
+  },
+  "license": "MIT",
+  "keywords": ["environment", "profile", "conda", "configuration"]
+}
