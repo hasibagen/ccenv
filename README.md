@@ -1,122 +1,119 @@
-# ccenv - Claude Code Environment Manager
+# ccenv - Claude Code 环境管理器
 
-> A conda-like environment manager for Claude Code configurations
+> 类 conda 的 Claude Code 配置环境管理工具
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 
-## 🌟 Overview
+## 🌟 简介
 
-**ccenv** is a profile management tool for [Claude Code](https://code.claude.com/) that lets you save, switch, and share development environments. Think of it as "conda for Claude Code configurations."
+**ccenv** 是一个为 [Claude Code](https://code.claude.com/) 设计的环境管理工具，让你可以保存、切换和分享开发环境配置。可以把它理解为"Claude Code 版的 conda"。
 
-### Why ccenv?
+### 为什么选择 ccenv？
 
-- **Save your setup** - Export your plugins, MCP servers, skills, and agents into a reusable profile
-- **Quick switching** - Switch between different project environments with a single command
-- **Share configurations** - Share your favorite setups with teammates or the community
-- **Version control friendly** - Profiles are YAML files that work great with git
+- **保存配置** - 将你的插件、MCP 服务器、技能和智能体导出为可复用的配置文件
+- **快速切换** - 一条命令即可在不同项目环境之间切换
+- **分享配置** - 与团队成员或社区分享你的常用配置
+- **版本控制友好** - 配置文件采用 YAML 格式，非常适合 git 管理
 
-## 📦 Installation
+## 📦 安装
 
-### Quick Install
+### 方式一：作为 Claude Code 插件安装（推荐）
 
 ```bash
-# Add the marketplace
+# 添加市场
 /plugin marketplace add https://github.com/hasibagen/ccenv
 
-# Install the plugin
+# 安装插件
 /plugin install ccenv@ccenv-market
 ```
 
-### Manual Install
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/hasibagen/ccenv.git
-   cd ccenv
-   ```
-
-2. Add as a local marketplace:
-   ```bash
-   /plugin marketplace add /path/to/ccenv/ccenv-market
-   ```
-
-3. Install the plugin:
-   ```bash
-   /plugin install ccenv@ccenv-market
-   ```
-
-## 🚀 Quick Start
-
-### Create a Profile
+### 方式二：作为 Python 包安装
 
 ```bash
-# Create a profile for frontend development
-/ccenv:create -n frontend -d "Frontend development" -p superpowers -p playwright
-
-# Create a profile for ML/AI work
-/ccenv:create -n ml -d "Machine learning" --mcp "python:npm:mcp-python-server"
+pip install ccenv
 ```
 
-### List Profiles
+### 方式三：手动安装
+
+```bash
+git clone https://github.com/hasibagen/ccenv.git
+cd ccenv
+pip install -e .
+```
+
+## 🚀 快速开始
+
+### 创建配置文件
+
+```bash
+# 创建前端开发配置
+/ccenv:create -n frontend -d "前端开发环境" -p superpowers -p playwright
+
+# 创建机器学习配置
+/ccenv:create -n ml -d "机器学习环境" --mcp "python:npm:mcp-python-server"
+```
+
+### 列出所有配置
 
 ```bash
 /ccenv:list
 ```
 
-Output:
+输出：
 ```
 ccenv Profiles
 ==============
 NAME        DESCRIPTION              MODIFIED
-frontend    Frontend development     2026-04-10
-ml          Machine learning         2026-04-10
-eeg         EEG/fNIRS research       2026-04-09
+frontend    前端开发环境             2026-04-10
+ml          机器学习环境             2026-04-10
+eeg         EEG/fNIRS 研究          2026-04-09
 ```
 
-### Apply a Profile
+### 应用配置
 
 ```bash
-# Apply to current directory
+# 应用到当前目录
 /ccenv:use frontend .
 
-# Apply to specific project
+# 应用到指定项目
 /ccenv:use ml /path/to/project
 
-# Preview changes (dry run)
+# 预览变更（不实际写入）
 /ccenv:use frontend . --dry-run
 ```
 
-### Extract & Update
+### 提取和更新
 
-After manually modifying your project's configuration:
+在手动修改项目配置后：
 
 ```bash
-# Update existing profile
+# 更新现有配置
 /ccenv:extract . -n frontend --update
 
-# Create new profile from current project
-/ccenv:extract . -n new-profile -d "My new setup"
+# 从当前项目创建新配置
+/ccenv:extract . -n new-profile -d "我的新配置"
 ```
 
-## 📖 Commands
+## 📖 命令参考
 
-| Command | Description |
-|---------|-------------|
-| `/ccenv:create` | Create a new profile with specified configuration |
-| `/ccenv:list` | List all available profiles |
-| `/ccenv:show` | Display details of a specific profile |
-| `/ccenv:use` | Apply a profile to a project directory |
-| `/ccenv:extract` | Extract configuration from a project to create/update a profile |
+| 命令 | 说明 |
+|------|------|
+| `/ccenv:create` | 创建新的配置文件 |
+| `/ccenv:list` | 列出所有可用配置 |
+| `/ccenv:show` | 显示指定配置的详情 |
+| `/ccenv:use` | 将配置应用到项目目录 |
+| `/ccenv:extract` | 从项目提取配置创建配置文件 |
 
-## 📁 Profile Structure
+## 📁 配置文件结构
 
-Profiles are stored as YAML files in `~/.claude/ccenv/profiles.d/`:
+配置文件存储在 `~/.claude/ccenv/profiles.d/` 目录下，采用 YAML 格式：
 
 ```yaml
 # ~/.claude/ccenv/profiles.d/frontend.yml
 name: frontend
 version: "1.0"
-description: Frontend development environment
+description: 前端开发环境
 mode: overlay  # overlay | replace
 
 plugins:
@@ -139,79 +136,157 @@ agents:
     model: claude-sonnet-4-6
 ```
 
-## 🔧 Configuration
+## 🔧 配置选项
 
-### Merge Modes
+### 合并模式
 
-- **overlay** (default): Add to existing configuration
-- **replace**: Replace configuration entirely
+- **overlay**（默认）：添加到现有配置
+- **replace**：完全替换配置
 
-### MCP Sources
+### MCP 来源格式
 
-| Format | Example |
-|--------|---------|
-| Local path | `local:${MATLAB_MCP_PATH}` |
-| npm package | `npm:@anthropic/playwright-mcp` |
-| pip package | `pip:mcp-server-tool` |
+| 格式 | 示例 |
+|------|------|
+| 本地路径 | `local:${MATLAB_MCP_PATH}` |
+| npm 包 | `npm:@anthropic/playwright-mcp` |
+| pip 包 | `pip:mcp-server-tool` |
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
-We welcome contributions! This project is maintained by the community.
+欢迎所有人参与！这是一个社区维护的项目。
 
-### Ways to Contribute
+### 贡献方式
 
-- 🐛 Report bugs via [Issues](https://github.com/hasibagen/ccenv/issues)
-- 💡 Suggest features or improvements
-- 📝 Improve documentation
-- 🔧 Submit pull requests
+- 🐛 通过 [Issues](https://github.com/hasibagen/ccenv/issues) 报告问题
+- 💡 提出新功能或改进建议
+- 📝 改进文档
+- 🔧 提交 Pull Request
 
-### Development Setup
+### 开发环境搭建
 
 ```bash
 git clone https://github.com/hasibagen/ccenv.git
 cd ccenv
+pip install -e ".[dev]"
 ```
 
-The project structure:
-```
-ccenv/
-├── ccenv-market/           # Marketplace (installable)
-│   ├── .claude-plugin/
-│   │   └── marketplace.json
-│   └── ccenv/
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       └── commands/
-│           ├── create.md
-│           ├── extract.md
-│           ├── list.md
-│           ├── show.md
-│           └── use.md
-├── docs/
-│   └── architecture.md
-└── README.md
-```
+## 📋 开发路线
 
-## 📋 Roadmap
+- [ ] Python CLI 完整实现
+- [ ] 从 URL 导入/导出配置
+- [ ] 通过 GitHub Gist 分享配置
+- [ ] 配置模板库
+- [ ] 根据项目类型自动推荐配置
 
-- [ ] Python CLI implementation (currently using placeholder commands)
-- [ ] Profile import/export from URLs
-- [ ] Profile sharing via GitHub Gist
-- [ ] Profile templates library
-- [ ] Auto-detect and suggest profiles based on project type
+## 📜 许可证
 
-## 📜 License
+MIT License - 详见 [LICENSE](LICENSE) 文件。
 
-MIT License - see [LICENSE](LICENSE) for details.
+## 🙏 致谢
 
-## 🙏 Acknowledgments
-
-- Inspired by [conda](https://docs.conda.io/) environment management
-- Built for [Claude Code](https://code.claude.com/)
-- Community-driven development
+- 灵感来源于 [conda](https://docs.conda.io/) 环境管理
+- 为 [Claude Code](https://code.claude.com/) 构建
+- 社区驱动开发
 
 ---
 
-**Made with ❤️ by the community**
+**用 ❤️ 由社区制作**
 
-*Not a professional developer? Neither are we! Contributions of all skill levels are welcome.*
+*不是专业程序员？没关系！欢迎各种技能水平的贡献者。*
+
+---
+
+## English Version | 英文版本
+
+### ccenv - Claude Code Environment Manager
+
+> A conda-like environment manager for Claude Code configurations
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+
+## Overview
+
+**ccenv** is a profile management tool for [Claude Code](https://code.claude.com/) that lets you save, switch, and share development environments. Think of it as "conda for Claude Code configurations."
+
+### Why ccenv?
+
+- **Save your setup** - Export your plugins, MCP servers, skills, and agents into a reusable profile
+- **Quick switching** - Switch between different project environments with a single command
+- **Share configurations** - Share your favorite setups with teammates or the community
+- **Version control friendly** - Profiles are YAML files that work great with git
+
+## Installation
+
+### Option 1: Install as Claude Code Plugin (Recommended)
+
+```bash
+/plugin marketplace add https://github.com/hasibagen/ccenv
+/plugin install ccenv@ccenv-market
+```
+
+### Option 2: Install as Python Package
+
+```bash
+pip install ccenv
+```
+
+## Quick Start
+
+```bash
+# Create a profile
+/ccenv:create -n frontend -d "Frontend development" -p superpowers
+
+# List profiles
+/ccenv:list
+
+# Apply to current project
+/ccenv:use frontend .
+
+# Extract from project
+/ccenv:extract . -n my-setup
+```
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/ccenv:create` | Create a new profile with specified configuration |
+| `/ccenv:list` | List all available profiles |
+| `/ccenv:show` | Display details of a specific profile |
+| `/ccenv:use` | Apply a profile to a project directory |
+| `/ccenv:extract` | Extract configuration from a project to create a profile |
+
+## Profile Structure
+
+```yaml
+name: frontend
+version: "1.0"
+description: Frontend development environment
+mode: overlay
+
+plugins:
+  add:
+    - superpowers@claude-plugins-official
+
+mcp:
+  playwright:
+    source: "npm:@anthropic/playwright-mcp"
+
+skills:
+  - name: frontend-design
+    source: global
+```
+
+## Contributing
+
+We welcome contributions from everyone!
+
+- 🐛 Report bugs via [Issues](https://github.com/hasibagen/ccenv/issues)
+- 💡 Suggest features
+- 📝 Improve documentation
+- 🔧 Submit pull requests
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
