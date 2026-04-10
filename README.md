@@ -21,7 +21,7 @@
 
 ```bash
 # Add the marketplace
-/plugin marketplace add https://github.com/YOUR_USERNAME/ccenv
+/plugin marketplace add https://github.com/hasibagen/ccenv
 
 # Install the plugin
 /plugin install ccenv@ccenv-market
@@ -31,7 +31,7 @@
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ccenv.git
+   git clone https://github.com/hasibagen/ccenv.git
    cd ccenv
    ```
 
@@ -160,7 +160,7 @@ We welcome contributions! This project is maintained by the community.
 
 ### Ways to Contribute
 
-- 🐛 Report bugs via [Issues](https://github.com/YOUR_USERNAME/ccenv/issues)
+- 🐛 Report bugs via [Issues](https://github.com/hasibagen/ccenv/issues)
 - 💡 Suggest features or improvements
 - 📝 Improve documentation
 - 🔧 Submit pull requests
@@ -168,7 +168,7 @@ We welcome contributions! This project is maintained by the community.
 ### Development Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ccenv.git
+git clone https://github.com/hasibagen/ccenv.git
 cd ccenv
 ```
 
