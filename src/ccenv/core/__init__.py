@@ -1,9 +1,3 @@
 """
-ccenv core modules
+Core module for ccenv
 """
-
-from .profile import ProfileManager
-from .merger import ConfigMerger
-from .resolver import MCPResolver
-
-__all__ = ["ProfileManager", "ConfigMerger", "MCPResolver"]

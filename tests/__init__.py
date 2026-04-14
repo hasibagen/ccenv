@@ -1,3 +1,3 @@
 """
-Tests for ccenv
+Tests package for ccenv
 """

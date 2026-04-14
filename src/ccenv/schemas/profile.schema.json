@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/hasibagen/ccenv/schemas/profile.schema.json",
+  "title": "ccenv Profile",
+  "description": "Schema for ccenv profile configuration",
+  "type": "object",
+  "required": ["name"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[\\w-]+$",
+      "description": "Profile name (alphanumeric, dash, underscore)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$",
+      "default": "1.0",
+      "description": "Profile version"
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "Profile description"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["overlay", "replace"],
+      "default": "overlay",
+      "description": "Configuration merge mode"
+    },
+    "plugins": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "add": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[\\w:-]+$"
+          },
+          "description": "Plugins to enable"
+        },
+        "remove": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[\\w:-]+$"
+          },
+          "description": "Plugins to disable"
+        }
+      }
+    },
+    "mcp": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["source"],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "MCP server source (local:${VAR}, marketplace:org/name, npm:pkg, pip:pkg, or path)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["stdio", "http", "sse"],
+            "default": "stdio"
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "env": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[\\w-]+$"
+          },
+          "source": {
+            "type": "string",
+            "enum": ["global", "project", "profile", "marketplace"],
+            "default": "global"
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^\\d+(\\.\\d+)?$"
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[\\w-]+$"
+          },
+          "source": {
+            "type": "string",
+            "enum": ["global", "project", "profile", "marketplace"],
+            "default": "global"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model override for this agent"
+          },
+          "permission_mode": {
+            "type": "string",
+            "enum": ["acceptEdits", "plan", "bypassPermissions", "default"],
+            "description": "Permission mode override"
+          }
+        }
+      }
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Environment variables to set"
+    },
+    "hooks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["object", "array"]
+      },
+      "description": "Claude Code hooks configuration"
+    }
+  }
+}
